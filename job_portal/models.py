@@ -7,10 +7,10 @@ from conf.settings import MEDIA_COMPANY_IMAGE_DIR, MEDIA_SPECIALITY_IMAGE_DIR
 class Company (models.Model):
     name = models.CharField(max_length=20)
     location = models.CharField(max_length=20)
-    logo = models.ImageField(upload_to=MEDIA_SPECIALITY_IMAGE_DIR, blank=True)
+    logo = models.ImageField(upload_to=MEDIA_COMPANY_IMAGE_DIR, blank=True)
     description = models.TextField()
     employee_count = models.IntegerField()
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="company", blank=True, null=True)
+    owner = models.OneToOneField(User, on_delete=models.CASCADE, related_name="company", blank=True, null=True)
 
     def __str__(self):
         return self.name

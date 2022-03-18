@@ -47,13 +47,10 @@
   </header>
 
   <main class="container mt-3 pb-5">
-    <section class="col-12 col-lg-6 offset-lg-3 mt-5 card">
-      <div class="card-body px-3 pb-4">
-        <h1 class="h4 pt-2">Моя компания</h1>
-        <p class="mt-2">Пока мы думаем, что вы – частное лицо. Хотите создать карточку компании, разместить информаию и вакансии?</p>
-        <a href="{% url 'company_create' %}" class="btn btn-info mb-2">Создать карточку компании</a>
-      </div>
-    </section>
+    <p class="alert alert-info" role="alert">
+      Информация о компании обновлена
+    </p>
+    <a href="{% url 'company_create' %}" class="btn btn-info mb-2">ок</a>
   </main>
 
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

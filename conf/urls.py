@@ -18,12 +18,13 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import LogoutView
+from django.views.generic.base import TemplateView
 
 from job_portal.views import \
     main, vacancies, category, companies, \
     Selected_vacancy, custom_handler404, custom_handler500, \
-    Vacancies_send, Company_letsstart, Company_create, Mycompany, \
-    Company_vacancies, Company_vacancies_create, Company_vacancies_edit
+    Company_edit, mycompany, \
+    company_vacancies, Company_vacancies_create, Company_vacancies_edit
 from accounts.views import RegisterView, AuthorizationView
 
 urlpatterns = [
@@ -33,13 +34,17 @@ urlpatterns = [
     path('vacancies/cat/<str:cat>', category, name='category'),
     path('companies/<int:id>', companies, name='companies'),
     path('vacancies/<int:vacancy_id>', Selected_vacancy.as_view(), name='selected_vacancy'),
-    path('vacancies/<int:pk>/send/', Vacancies_send.as_view(), name='vacancies_send'),
-    path('mycompany/letsstart/', Company_letsstart.as_view(), name='company_letsstart'),
-    path('mycompany/create/', Company_create.as_view(), name='company_create'),
-    path('mycompany/', Mycompany.as_view(), name='mycompany'),
-    path('mycompany/vacancies/', Company_vacancies.as_view(), name='company_vacancies'),
+    path('vacancies/send/', TemplateView.as_view(template_name = 'job_portal/sent.html'), name='vacancies_send'),
+
+    path('mycompany/letsstart/', TemplateView.as_view(template_name = 'job_portal/company-create.html'), name='company_letsstart'),
+    path('mycompany/create/', Company_edit.as_view(), name='company_create'),
+    path('mycompany/', mycompany, name='mycompany'),
+    path('mycompany/create/success', TemplateView.as_view(template_name = 'job_portal/company-create-success.html')),
+
+    path('mycompany/vacancies/', company_vacancies, name='company_vacancies'),
     path('mycompany/vacancies/create/', Company_vacancies_create.as_view(), name='company_vacancies_create'),
     path('mycompany/vacancies/<int:id>', Company_vacancies_edit.as_view(), name='one_company_vacancy'),
+
     path('login/', AuthorizationView.as_view(), name='login'),
     path('register/', RegisterView.as_view(), name='register'),
     path('logout/', LogoutView.as_view(), name='logout'),
