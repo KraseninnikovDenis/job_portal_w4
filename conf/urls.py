@@ -24,7 +24,7 @@ from job_portal.views import \
     main, vacancies, category, companies, \
     Selected_vacancy, custom_handler404, custom_handler500, \
     Company_edit, mycompany, \
-    company_vacancies, Company_vacancies_create, Company_vacancies_edit
+    Company_vacancies, Company_vacancies_create, Company_vacancies_edit
 from accounts.views import RegisterView, AuthorizationView
 
 urlpatterns = [
@@ -32,18 +32,19 @@ urlpatterns = [
     path('', main, name='main'),
     path('vacancies/', vacancies, name='vacancies'),
     path('vacancies/cat/<str:cat>', category, name='category'),
-    path('companies/<int:id>', companies, name='companies'),
+    path('companies/<int:companies_id>', companies, name='companies'),
     path('vacancies/<int:vacancy_id>', Selected_vacancy.as_view(), name='selected_vacancy'),
     path('vacancies/send/', TemplateView.as_view(template_name = 'job_portal/sent.html'), name='vacancies_send'),
 
     path('mycompany/letsstart/', TemplateView.as_view(template_name = 'job_portal/company-create.html'), name='company_letsstart'),
     path('mycompany/create/', Company_edit.as_view(), name='company_create'),
     path('mycompany/', mycompany, name='mycompany'),
-    path('mycompany/create/success', TemplateView.as_view(template_name = 'job_portal/company-create-success.html')),
+    path('mycompany/create/success', TemplateView.as_view(template_name = 'job_portal/create-or-update-success.html')),
 
-    path('mycompany/vacancies/', company_vacancies, name='company_vacancies'),
+    path('mycompany/vacancies/', Company_vacancies.as_view(), name='company_vacancies'),
     path('mycompany/vacancies/create/', Company_vacancies_create.as_view(), name='company_vacancies_create'),
-    path('mycompany/vacancies/<int:id>', Company_vacancies_edit.as_view(), name='one_company_vacancy'),
+    path('mycompany/vacancies/<int:vacancy_id>', Company_vacancies_edit.as_view(), name='company_vacancies_update'),
+    path('mycompany/vacancies/create/success', TemplateView.as_view(template_name = 'job_portal/create-or-update-success.html')),
 
     path('login/', AuthorizationView.as_view(), name='login'),
     path('register/', RegisterView.as_view(), name='register'),

@@ -1,0 +1,10 @@
+{% extends 'job_portal/base_company_owner.html' %}
+{% block container %}
+  <main class="container mt-3 pb-5">
+    <p class="alert alert-info" role="alert">
+      Информация о компании обновлена
+    </p>
+    <a href="{% url 'company_create' %}" class="btn btn-info mb-2">ок</a>
+  </main>
+  {% endblock %}
+  

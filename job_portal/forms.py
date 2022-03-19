@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from job_portal.models import Application, Company
+from job_portal.models import Application, Company, Vacancy
 
 
 class VacancyResponseForm(ModelForm):
@@ -15,3 +15,9 @@ class CompanyUpdateOrCreateForm(ModelForm):
         model = Company
         fields = ('name', 'location', 'description', 'employee_count', 'logo','owner')
 
+
+class VacancyUpdateForm(ModelForm):
+
+    class Meta:
+        model = Vacancy
+        fields = ('title', 'specialty', 'skills', 'description', 'salary_min','salary_max')
