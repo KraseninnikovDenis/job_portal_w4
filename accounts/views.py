@@ -1,5 +1,3 @@
-from re import template
-from django.shortcuts import render
 from django.views.generic.edit import CreateView
 from django.contrib.auth.views import LoginView
 from accounts.forms import MyUserCreationForm
@@ -10,9 +8,6 @@ class RegisterView(CreateView):
     success_url = '/login'
     template_name = 'accounts/register.html'
 
-    
-
 
 class AuthorizationView(LoginView):
     template_name = 'accounts/login.html'
-

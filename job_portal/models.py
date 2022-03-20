@@ -7,7 +7,7 @@ from conf.settings import MEDIA_COMPANY_IMAGE_DIR, MEDIA_SPECIALITY_IMAGE_DIR
 class Company (models.Model):
     name = models.CharField(max_length=20)
     location = models.CharField(max_length=20)
-    logo = models.ImageField(upload_to=MEDIA_COMPANY_IMAGE_DIR, blank=True)
+    logo = models.ImageField(upload_to=MEDIA_COMPANY_IMAGE_DIR)
     description = models.TextField()
     employee_count = models.IntegerField()
     owner = models.OneToOneField(User, on_delete=models.CASCADE, related_name="company", blank=True, null=True)
@@ -19,7 +19,7 @@ class Company (models.Model):
 class Specialty(models.Model):
     code = models.CharField(max_length=20)
     title = models.CharField(max_length=20)
-    picture = models.ImageField(upload_to=MEDIA_SPECIALITY_IMAGE_DIR, blank=True)
+    picture = models.ImageField(upload_to=MEDIA_SPECIALITY_IMAGE_DIR)
 
     def __str__(self):
         return self.title
@@ -35,6 +35,9 @@ class Vacancy(models.Model):
     salary_max = models.FloatField()
     published_at = models.DateField(auto_now_add=True)
 
+    def __str__(self):
+        return self.title
+
 
 class Application(models.Model):
     written_username = models.CharField(max_length=15)
@@ -42,3 +45,6 @@ class Application(models.Model):
     written_cover_letter = models.TextField()
     vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE, related_name="applications")
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="applications")
+
+    def __str__(self):
+        return self.written_username

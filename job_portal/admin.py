@@ -13,6 +13,7 @@ class VacancyAdmin(admin.ModelAdmin):
 class ApplicationAdmin(admin.ModelAdmin):
     pass
 
+
 class SpecialtyAdmin(admin.ModelAdmin):
     pass
 

@@ -2,16 +2,15 @@
 {% block container %}
             <!-- Tab -->
             <section>
-              <h2 class="h4 pt-2 pb-3">Backend Middle/Senior</h2>
-              <p class="alert alert-info" role="alert">Вакансия обновлена</p>
-              <form enctype="multipart/form-data", method="POST">
+              <h2 class="h4 pt-2 pb-3">{{ form.title.value }}</h2>
+              <form method="POST">
                 {% csrf_token %}
                 <table>{{ form.as_table }}</table>
-                <input type="submit" class="btn btn-info" value="Сохранить">
+                <input type="submit" class="btn btn-info" value="сохранить">
               </form>
               <!-- END Vacancy info -->
               <!-- Applications -->
-              <h2 class="h4 pt-2 pb-3">{{ application.count }} отклиов</h2>
+              <h2 class="h4 pt-2 pb-3">{{ application.count }} откликов</h2>
               {% for app_i in application %}
               <!-- Application i -->
               <div class="card mt-3">

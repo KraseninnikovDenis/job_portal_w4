@@ -13,38 +13,42 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib import admin
 from django.contrib.auth.views import LogoutView
+from django.urls import path
 from django.views.generic.base import TemplateView
 
-from job_portal.views import \
-    main, vacancies, category, companies, \
-    Selected_vacancy, custom_handler404, custom_handler500, \
-    Company_edit, mycompany, \
-    Company_vacancies, Company_vacancies_create, Company_vacancies_edit
 from accounts.views import RegisterView, AuthorizationView
+from job_portal.views.custom_handler import custom_handler404, custom_handler500
+from job_portal.views.my_company import MycompanyCreate, CompanyEdit, CompanyLetsstart, Success
+from job_portal.views.my_company_vacancies import CompanyVacancies, CompanyVacanciesCreate, CompanyVacanciesEdit
+from job_portal.views.public import main, vacancies, \
+    category, companies, SelectedVacancy
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
     path('', main, name='main'),
     path('vacancies/', vacancies, name='vacancies'),
     path('vacancies/cat/<str:cat>', category, name='category'),
     path('companies/<int:companies_id>', companies, name='companies'),
-    path('vacancies/<int:vacancy_id>', Selected_vacancy.as_view(), name='selected_vacancy'),
-    path('vacancies/send/', TemplateView.as_view(template_name = 'job_portal/sent.html'), name='vacancies_send'),
+    path('vacancies/<int:vacancy_id>', SelectedVacancy.as_view(), name='selected_vacancy'),
+    path('vacancies/send/', TemplateView.as_view(template_name='job_portal/public/sent.html'), name='vacancies_send'),
 
-    path('mycompany/letsstart/', TemplateView.as_view(template_name = 'job_portal/company-create.html'), name='company_letsstart'),
-    path('mycompany/create/', Company_edit.as_view(), name='company_create'),
-    path('mycompany/', mycompany, name='mycompany'),
-    path('mycompany/create/success', TemplateView.as_view(template_name = 'job_portal/create-or-update-success.html')),
+    path('mycompany/', CompanyEdit.as_view(), name='mycompany'),
+    path('mycompany/letsstart/', CompanyLetsstart.as_view(), name='company_letsstart'),
+    path('mycompany/create/', MycompanyCreate.as_view(), name='company_create'),
+    path('mycompany/create/success', Success.as_view(template_name='job_portal/create-or-update-success.html')),
 
-    path('mycompany/vacancies/', Company_vacancies.as_view(), name='company_vacancies'),
-    path('mycompany/vacancies/create/', Company_vacancies_create.as_view(), name='company_vacancies_create'),
-    path('mycompany/vacancies/<int:vacancy_id>', Company_vacancies_edit.as_view(), name='company_vacancies_update'),
-    path('mycompany/vacancies/create/success', TemplateView.as_view(template_name = 'job_portal/create-or-update-success.html')),
+    path('mycompany/vacancies/', CompanyVacancies.as_view(), name='company_vacancies'),
+    path('mycompany/vacancies/create/', CompanyVacanciesCreate.as_view(), name='company_vacancies_create'),
+    path('mycompany/vacancies/<int:vacancy_id>', CompanyVacanciesEdit.as_view(), name='company_vacancies_update'),
+    path('mycompany/vacancies/create/success', Success.as_view(
+        template_name='job_portal/create-or-update-success.html',
+    )),
 
     path('login/', AuthorizationView.as_view(), name='login'),
     path('register/', RegisterView.as_view(), name='register'),
@@ -52,8 +56,10 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, 
-                          document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT,
+    )
 
 handler404 = custom_handler404
 handler500 = custom_handler500

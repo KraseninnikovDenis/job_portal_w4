@@ -1,10 +1,17 @@
 {% extends 'job_portal/base_company_owner.html' %}
 {% block container %}
-  <main class="container mt-3 pb-5">
-    <p class="alert alert-info" role="alert">
-      Информация о компании обновлена
-    </p>
-    <a href="{% url 'company_create' %}" class="btn btn-info mb-2">ок</a>
-  </main>
-  {% endblock %}
+<div class="col-12 col-lg-8">
+  <div class="card">
+    <div class="card-body px-4 pb-4">
+      <!-- Tab -->
+      <section class="tab-pane fade show active">
+        <p class="alert alert-info" role="alert">
+          Информация о компании обновлена
+        </p>
+        <a href="{% url 'company_create' %}" class="btn btn-info mb-4">ок</a>
+      </section>
+    </div>
+  </div>
+</div>
+{% endblock %}
   
