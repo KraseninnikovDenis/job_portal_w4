@@ -37,6 +37,10 @@ urlpatterns = [
     path('companies/<int:companies_id>', companies, name='companies'),
     path('vacancies/<int:vacancy_id>', SelectedVacancy.as_view(), name='selected_vacancy'),
     path('vacancies/send/', TemplateView.as_view(template_name='job_portal/public/sent.html'), name='vacancies_send'),
+    path(
+        'vacancies/resending/',
+        TemplateView.as_view(template_name='job_portal/public/resending.html'),
+        name='vacancies_resending'),
 
     path('mycompany/', CompanyEdit.as_view(), name='mycompany'),
     path('mycompany/letsstart/', CompanyLetsstart.as_view(), name='company_letsstart'),
@@ -55,10 +59,11 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
 ]
 
-urlpatterns += static(
-    settings.MEDIA_URL,
-    document_root=settings.MEDIA_ROOT,
-)
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT,
+    )
 
 handler404 = custom_handler404
 handler500 = custom_handler500

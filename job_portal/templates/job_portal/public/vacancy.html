@@ -1,7 +1,7 @@
 {% extends 'job_portal/base.html' %}
 {% load humanize %}
 {% load add_point_in_str %}
-
+{% load static %}
 {% block container %}
 
   <main class="container mt-3 pb-5">
@@ -15,6 +15,7 @@
         <section class="pl-3">
           <a href="{% url 'companies' vacancy.company.pk %}"><img src="{{ vacancy.company.logo.url }}" width="130" height="80" alt=""></a>
           <div class="d-flex align-items-baseline align-content-baseline">
+            <main class="container mt-3 pb-5">
             <h1 class="h2 mt-4 font-weight-bold" >{{ vacancy.title }}</h1>
             <p class="m-0 pl-3">{{ vacancy.salary_min|floatformat|intcomma }} – {{ vacancy.salary_max|floatformat|intcomma }} Р</p>
           </div>
@@ -23,11 +24,13 @@
           <div style="line-height: 1.8;">
             {{ description }}
           </div>
+          {% if user.is_authenticated %}
           <form enctype="multipart/form-data", method="POST">
             {% csrf_token %}
             <table>{{ form.as_table }}</table>
             <input type="submit" class="btn btn-info" value="отправить">
           </form>
+          {% endif %}
         </section>
       </div>
     </div>

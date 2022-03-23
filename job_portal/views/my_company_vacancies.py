@@ -2,6 +2,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
 from django.http import Http404
+from django.shortcuts import redirect
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView
 
@@ -12,6 +13,13 @@ from job_portal.models import Company, Vacancy, Application
 class CompanyVacancies(LoginRequiredMixin, ListView):
     model = Vacancy
     template_name = 'job_portal/my_company_vacansies/vacancy-list.html'
+
+    def get(self, request, *args, **kwargs):
+        try:
+            Company.objects.get(owner_id=request.user.id)
+        except ObjectDoesNotExist:
+            return redirect('/mycompany/letsstart/')
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
